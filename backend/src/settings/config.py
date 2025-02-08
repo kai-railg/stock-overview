@@ -16,11 +16,10 @@ ALLOWED_HOSTS: List[str] = config(
 
 
 # postgresql config
-PG_URL: str = config(
-    "PG_URL",
+DATABASE_URL: str = config(
+    "DATABASE_URL",
     cast=str,
-    default=f"postgresql+asyncpg://postgres:postgres@/stockoverview?target_session_attrs=read-write&host=127.0.0.1:5531"
-
+    default=f"postgresql+asyncpg://postgres:postgres@/stockoverview?target_session_attrs=read-write&host=127.0.0.1:5531",
 )
 
 # redis config
