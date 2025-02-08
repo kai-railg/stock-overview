@@ -2,8 +2,9 @@
 
 
 from src.middleware.api_view import BaseApiView
-
+from src.access import qstock_access
 
 class BillBoardView(BaseApiView):
-    def get(self, body: dict):
-        return
+    def get(self):
+        data = qstock_access.stock_billboard()
+        return data

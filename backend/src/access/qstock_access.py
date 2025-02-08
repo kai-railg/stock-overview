@@ -4,7 +4,9 @@
 # @FileName      : qstock_access
 # @Time          : 2025-02-07 21:01:54
 """
+from typing import List, Dict
 
+from pandas import DataFrame
 import qstock as qs
 
 class QstockAccess:
@@ -12,24 +14,34 @@ class QstockAccess:
         pass
 
     def realtime_data(self, code):
-        df = qs.stock_realtime(code=code)
-
-    def intraday_data(self, code):
-        df = qs.intraday_data(code=code)
+        df: DataFrame = qs.stock_realtime(code=code)
         return {
-            "keys": ["名称", "代码", "时间", "成交价", "成交量", "单数"],
+            "keys": df.keys().tolist(),
+            "data": df.values.tolist(),
+        }
+    def intraday_data(self, code: str | List) -> Dict[str, List]:
+        df: DataFrame = qs.intraday_data(code=code)
+        return {
+            # "keys": ["名称", "代码", "时间", "成交价", "成交量", "单数"],
+            "keys": df.keys().tolist(),
             "data": df.values.tolist()
         }
         # for row in df.iloc:
         #     name = row["名称"]
-        #     code = row["代码"]
-        #     time = row["时间"]
-        #     price = row["成交价"]
-        #     volume = row["成交量"]
-        #     number = row["单数"]
 
-    def get_data(self, code):
-        df = qs.get_data(code=code)
+    def history_data(self, code, start="", end=None, freq="d", fqt=1):
+        df: DataFrame = qs.get_data(code, start, end, freq, fqt)
+        return {
+            # "keys": ["日期", "名称", "代码", "开盘价", "最高价", "最低价","收盘价", "成交量", "成交额", "换手率"],
+            "keys": df.keys().tolist(),
+            "data": df.values.tolist(),
+        }
 
     def stock_billboard(self, code):
-        df = qs.stock_billboard(code=code)
+        df: DataFrame = qs.stock_billboard(code=code)
+        # ['股票代码', '股票名称', '上榜日期', '收盘价', '涨跌幅', '换手率', '龙虎榜净买额', '流通市值', '上榜原因', '解读']
+        return {
+            "keys": df.keys().tolist(),
+            "data": df.values.tolist(),
+        }
+qstock_access = QstockAccess()
