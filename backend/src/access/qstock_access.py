@@ -44,4 +44,20 @@ class QstockAccess:
             "keys": df.keys().tolist(),
             "data": df.values.tolist(),
         }
+
+    def ths_index_name(self, flag="概念") -> List[str]:
+        """
+        flag='概念板块' or '行业板块'
+        """
+        return qs.ths_index_name(flag)
+
+    def ths_index_data(self, flag):
+        df: DataFrame = qs.ths_index_data("有机硅概念")
+        # ['open', 'high', 'low', 'close', 'volume']
+        # [993.591, 1013.761, 974.0, 1003.961, 565868450.0]
+        return {
+            "keys": df.keys().tolist(),
+            "data": df.values.tolist(),
+        }
+
 qstock_access = QstockAccess()

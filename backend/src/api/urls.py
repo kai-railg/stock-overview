@@ -32,7 +32,7 @@ route_list = [
         IntradayView,
         {"summary": "日内成交数据"},
     ),
-        (
+    (
         "/api/qstock/history",
         HistoryView,
         {"summary": "历史行情数据"},
@@ -41,6 +41,21 @@ route_list = [
         "/api/qstock/billboard",
         BillBoardView,
         {"summary": "龙虎榜"},
+    ),
+    (
+        "/api/qstock/ths-index-name",
+        ThsIndexNameView,
+        {"summary": "概念板块"},
+    ),
+    (
+        "/api/qstock/ths-index-member",
+        ThsIndexMemberView,
+        {"summary": "概念板块成分股"},
+    ),
+    (
+        "/api/qstock/ths-index-data",
+        ThsIndexDataView,
+        {"summary": "概念板块行情数据"},
     ),
     (
         "/api/stock/daily-overview",

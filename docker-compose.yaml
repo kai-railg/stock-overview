@@ -1,0 +1,15 @@
+
+services:
+  postgres:
+    container_name: stock-overview-pg
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/Users/kai/opt/project/kai/stock-overview/data
+
+volumes:
+  pgdata:

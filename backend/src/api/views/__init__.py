@@ -7,3 +7,4 @@ from .realtime import *
 from .group import *
 from .detail import *
 from .comment import *
+from .ths_index import *

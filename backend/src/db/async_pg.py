@@ -6,9 +6,9 @@ from typing import AsyncGenerator
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 
-from src.settings import PG_URL
+from src.settings import DATABASE_URL
 
-pg_async_engine =  create_async_engine(url=PG_URL)
+pg_async_engine = create_async_engine(url=DATABASE_URL)
 
 pg_sessionmaker = sessionmaker(
     pg_async_engine,

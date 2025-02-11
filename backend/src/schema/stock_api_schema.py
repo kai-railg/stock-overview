@@ -14,7 +14,7 @@ class StockRequestSchema(BaseModel):
     code: str = ""
     name: str = ""
     tag: str = ""
-    group: str = ""
+    group: str
 
     @model_validator(mode="before")
     @classmethod

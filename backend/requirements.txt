@@ -13,3 +13,6 @@ termcolor==2.4.0
 qstock
 pywencai
 beautifulsoup4
+html5lib
+lxml
+alembic

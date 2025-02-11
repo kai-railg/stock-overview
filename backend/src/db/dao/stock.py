@@ -29,28 +29,17 @@ class StockDao(object):
         self, schema: StockRequestSchema, session: AsyncSession
     ) -> Stock:
 
-        _orm = select(Stock).options(selectinload(Stock.groups))
+        stmt = select(Stock).options(selectinload(Stock.groups))
         if schema.code:
-            _orm = _orm.where(Stock.code == schema.code)
+            stmt = stmt.where(Stock.code == schema.code)
         elif schema.name:
-            _orm = _orm.where(Stock.name == schema.name)
+            stmt = stmt.where(Stock.name == schema.name)
         else:
             raise ValueError("code or name is required")
-        return (await session.execute(_orm)).scalars().first()
+        if schema.group:
+            stmt = stmt.where(schema.group._in(Stock.groups))
+        return (await session.execute(stmt)).scalars().first()
 
-    async def get_stock_by_condition(
-        self, conditions: tuple, session: AsyncSession, is_first: bool = True
-    ):
-        orm = select(Stock).options(selectinload(Stock.groups))
-        if conditions:
-            orm.where(*conditions)
-        result: ChunkedIteratorResult = await session.execute(orm)
-        if is_first:
-            return result.scalar_one_or_none()
-        return result.scalars()
-
-
-    
     async def delete_stock(
         self, schema: StockRequestSchema, session: AsyncSession
     ):
@@ -60,10 +49,15 @@ class StockDao(object):
                 Stock.code == schema.code
             )
         elif schema.name:
-            stmt = select(Stock).where(Stock.name == schema.name)
+            stmt = select(Stock).where(
+                Stock.name == schema.name
+            )
         else:
             logger.error(f"There is no code or name when delete")
             return
+        if schema.group:
+            stmt = stmt.where(schema.group._in(Stock.groups))
+        
         Stock_instance = (await session.scalars(stmt)).first()
 
         if Stock_instance:
@@ -72,7 +66,6 @@ class StockDao(object):
             await session.flush()
 
 stock_dao = StockDao()
-
 
 
 # from sqlalchemy import select

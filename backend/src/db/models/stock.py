@@ -36,8 +36,8 @@ class Stock(Base):
     __tablename__ = "stock"
     id = Column(Integer, primary_key=True, autoincrement=True)
 
-    code = Column(String(20), unqique=True, nullable=False)
-    name = Column(String(20), unqique=True, nullable=False)
+    code = Column(String(20), unique=True, nullable=False)
+    name = Column(String(20), unique=True, nullable=False)
     tag = Column(String(20), default="")
 
     groups = relationship("Group", secondary=association_table, back_populates="stocks")
