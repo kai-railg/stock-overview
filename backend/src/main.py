@@ -12,6 +12,7 @@ from src.settings import f_log, TITLE, ALLOWED_HOSTS
 from src.utils import use_static_swagger
 from src.aop import ErrorLoggingMiddleware
 from src.api import router
+from src.db import create_db_if_not_exists, create_all_tables
 
 
 @asynccontextmanager
@@ -20,6 +21,9 @@ async def lifespan(app: FastAPI):
     colored_art = colored(Figlet(font="slant").renderText(TITLE).rstrip("\n"), "green")
     f_log.info(colored_art)
     print(colored_art)
+
+    await create_db_if_not_exists()
+    await create_all_tables()
 
     yield
 

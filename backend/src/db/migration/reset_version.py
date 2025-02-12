@@ -18,7 +18,8 @@ async def rm_alembic_version():
             await session.execute(sa_text('''TRUNCATE TABLE alembic_version'''))
             await session.commit()
         except:
-            print(f"error: {traceback.format_exc()}")
+            pass
+            # print(f"error: {traceback.format_exc()}")
 
 
 if __name__ == "__main__":

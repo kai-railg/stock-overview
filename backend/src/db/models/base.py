@@ -9,17 +9,15 @@ import traceback
 from contextlib import contextmanager, suppress
 
 import sqlalchemy.exc
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import sessionmaker, declarative_base, DeclarativeMeta
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 
 from src.settings import DATABASE_URL
 
-engine = create_engine(DATABASE_URL, pool_size=20, max_overflow=0)
+engine = create_async_engine(DATABASE_URL, pool_size=20, max_overflow=0)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-Base = declarative_base()
+Base: DeclarativeMeta = declarative_base()
 
 
 @contextmanager

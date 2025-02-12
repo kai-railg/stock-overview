@@ -1,6 +1,6 @@
 #!/bin/bash
 
-python3 -m src.db.migrations.reset_version
+python3 -m src.db.migration.reset_version
 
 rm -rf ./src/db/migration/versions/*
 
