@@ -4,7 +4,7 @@
 # @FileName      : stock
 # @Time          : 2025-02-08 21:17:38
 """
-
+from typing import List, Dict, Tuple
 
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import (
@@ -25,10 +25,7 @@ from src.schema import StockRequestSchema
 
 class StockDao(object):
 
-    async def get_stock(
-        self, schema: StockRequestSchema, session: AsyncSession
-    ) -> Stock:
-
+    def _get_stock_stmt(self, schema: StockRequestSchema):
         stmt = select(Stock).options(selectinload(Stock.groups))
         if schema.code:
             stmt = stmt.where(Stock.code == schema.code)
@@ -36,9 +33,50 @@ class StockDao(object):
             stmt = stmt.where(Stock.name == schema.name)
         else:
             raise ValueError("code or name is required")
-        if schema.group:
-            stmt = stmt.where(schema.group._in(Stock.groups))
+        return stmt
+
+    async def _get_stock(self, schema: StockRequestSchema, session: AsyncSession):
+        stmt = self._get_stock_stmt(schema)
         return (await session.execute(stmt)).scalars().first()
+
+    def _get_group_stmt(self, group: str):
+        stmt = select(Group)
+        if group:
+            stmt = stmt.where(Group.name == group)
+        return stmt
+    async def _get_group(self, group: str, session: AsyncSession) -> Group:
+        stmt = self._get_group_stmt(group)
+        return (await session.execute(stmt)).scalars().first()
+
+    async def get_stock(
+        self, schema: StockRequestSchema, session: AsyncSession
+    ) -> Stock:
+        """
+        这个接口仅是获取股票的代码和名称
+        """
+
+        stmt = self._get_stock_stmt(schema)
+        return (await session.execute(stmt)).scalars().first()
+
+    async def _get_group_and_stock(self, schema: StockRequestSchema, session: AsyncSession) -> Tuple[Stock, Group]:
+        stock = await self._get_stock(schema, session)
+        if not stock:
+            raise ValueError("stock is already exists")
+        group: Group = await self._get_group(schema.group)
+        if not group:
+            raise ValueError("group is not exists")
+        return stock, group
+    async def group_add_stock(self, schema: StockRequestSchema, session: AsyncSession):
+        stock, group = await self._get_group_and_stock(schema, session)
+        group.add_stock_id(stock)
+        await session.commit()
+    async def group_delete_stock(self, schema: StockRequestSchema, session: AsyncSession):
+        stock, group = await self._get_group_and_stock(schema, session)
+        group.delete_stock_id(stock.id)
+        await session.commit()
+    async def bulk_insert_stock(self, data_list: List[Dict], session: AsyncSession):
+        await session.execute(insert(Stock), data_list)
+        await session.commit()
 
     async def delete_stock(
         self, schema: StockRequestSchema, session: AsyncSession
@@ -57,7 +95,7 @@ class StockDao(object):
             return
         if schema.group:
             stmt = stmt.where(schema.group._in(Stock.groups))
-        
+
         Stock_instance = (await session.scalars(stmt)).first()
 
         if Stock_instance:

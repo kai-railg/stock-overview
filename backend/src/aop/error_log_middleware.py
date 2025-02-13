@@ -30,6 +30,6 @@ class ErrorLoggingMiddleware(BaseHTTPMiddleware):
             return JSONResponse(
                 status_code=500,
                 content={
-                    "message": f"Internal Server Error From {self.app.title.title()}"
+                    "message": f"Internal Server Error From {self.app}"
                 }
             )

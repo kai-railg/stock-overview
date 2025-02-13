@@ -15,32 +15,37 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from src.settings import DATABASE_URL
 
 engine = create_async_engine(DATABASE_URL, pool_size=20, max_overflow=0)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+SessionLocal = sessionmaker(
+    class_=AsyncSession,
+    autocommit=False, 
+    autoflush=False, 
+    bind=engine
+)
 
 Base: DeclarativeMeta = declarative_base()
 
-
-@contextmanager
-def get_db_with_generator():
-    session = None
-    try:
-        session = SessionLocal()
-        # with suppress(Exception):
+async def get_db():
+    async with SessionLocal() as session:
         yield session
-    except Exception as e:
-        if session:
-            session.rollback()
-        raise Exception(e)
-    else:
-        try:
-            session.commit()
-        except sqlalchemy.exc.SQLAlchemyError as e:
-            # s = str(e).split("\n")[0]
-            # GP.report_error(f"sqlalchemy.err: {s}")
-            raise Exception(e)
-    finally:
-        if session:
-            session.close()
+    # session = None
+    # try:
+    #     session = SessionLocal()
+    #     # with suppress(Exception):
+    #     yield session
+    # except Exception as e:
+    #     if session:
+    #         session.rollback()
+    #     raise Exception(e)
+    # else:
+    #     try:
+    #         session.commit()
+    #     except sqlalchemy.exc.SQLAlchemyError as e:
+    #         # s = str(e).split("\n")[0]
+    #         # GP.report_error(f"sqlalchemy.err: {s}")
+    #         raise Exception(e)
+    # finally:
+    #     if session:
+    #         session.close()
 
 
 # 自动创建数据库SQL
