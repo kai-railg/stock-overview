@@ -26,15 +26,13 @@ class StockRequestSchema(BaseModel):
         return data
 
 
-class GroupPutSchema(StockRequestSchema):
+class GroupStockPutSchema(StockRequestSchema):
     hidden: bool = False
 
 
-class StockSchema(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
-
-    id: int
-    code: str
+class GroupRequestSchema(BaseModel):
+    group: str = ""
+    
+class UpdateGroupRequestSchema(GroupRequestSchema):
+    group: str
     name: str
-    tag: str
-    groups: List

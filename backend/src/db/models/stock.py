@@ -60,8 +60,8 @@ class Group(Base):
     name = Column(String, unique=True, nullable=False)
     stock_info = Column(Text)
 
-    def add_stock_id(self, stock: Stock):
-        stock_dict = self.get_stock_ids()
+    def add_stock(self, stock: Stock):
+        stock_dict = self.get_stock_info()
         if stock.id not in stock_dict:
             stock_dict[stock.id] = {
                 "id": stock.id,
@@ -71,16 +71,22 @@ class Group(Base):
             }
             self.set_stock_info(stock_dict)
 
-    def delete_stock_id(self, stock_id):
-        stock_dict = self.get_stock_ids()
+    def delete_stock(self, stock_id):
+        stock_dict = self.get_stock_info()
         if stock_id in stock_dict:
             stock_dict.pop(stock_id)
             self.set_stock_info(stock_dict)
 
-    def get_stock_ids(self):
+    def get_stock_info(self):
         if self.stock_info:
             return json.loads(self.stock_info)
         else:
+            # {
+            #     "id": stock.id,
+            #     "hidden": False,
+            #     "name": stock.name,
+            #     "code": stock.code
+            # }
             return {}
     def set_stock_info(self, stock_info):
         self.stock_info = json.dumps(stock_info)
