@@ -14,7 +14,7 @@ class QstockAccess:
         pass
 
     def realtime_data(self, code):
-        df: DataFrame = qs.stock_realtime(code=code)
+        df: DataFrame = qs.stock_realtime(code)
         return {
             "keys": df.keys().tolist(),
             "data": df.values.tolist(),

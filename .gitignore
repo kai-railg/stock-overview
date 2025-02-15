@@ -6,6 +6,7 @@ dist
 *.whl*
 *.zip
 *.bz*
+.DS_Store
 *.log
 *test.py
 .vscode
@@ -13,3 +14,4 @@ dist
 *.gz
 *.zip
 data
+*.env*

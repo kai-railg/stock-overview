@@ -29,10 +29,3 @@ class StockRequestSchema(BaseModel):
 class GroupStockPutSchema(StockRequestSchema):
     hidden: bool = False
 
-
-class GroupRequestSchema(BaseModel):
-    group: str = ""
-    
-class UpdateGroupRequestSchema(GroupRequestSchema):
-    group: str
-    name: str

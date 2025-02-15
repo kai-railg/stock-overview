@@ -20,27 +20,31 @@ class GroupStockApiView(BaseApiView):
 
     async def post(
         self,
-        body: StockRequestSchema,
+        group_name: str,
+        stock_iden: str,
         session: AsyncSession = Depends(get_db),
     ):
-        if not body.group:
+        if not group_name:
             raise HTTPException(status_code=404, detail="group not found")
-        await group_dao.add_stock(body, session)
-        return 
+
+        await group_dao.add_stock(group_name, stock_iden, session)
+        return {"message": "success"}
 
     async def put(
         self,
-        body: StockRequestSchema,
+        group_name: str,
+        stock_iden: str,
         session: AsyncSession = Depends(get_db),
     ):
         pass
 
     async def delete(
         self,
-        body: StockRequestSchema,
+        group_name: str,
+        stock_iden: str,
         session: AsyncSession = Depends(get_db),
     ):
-        if not body.group:
+        if not group_name:
             raise HTTPException(status_code=404, detail="group not found")
-        await group_dao.delete_stock(body, session)
+        await group_dao.delete_stock(group_name, stock_iden, session)
         return

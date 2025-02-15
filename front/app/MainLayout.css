@@ -1,0 +1,64 @@
+.main-layout {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    /* 左边侧边导航栏占 200px，中间部分占剩余空间 */
+    grid-template-rows: 80px 1fr;
+    /* 上边导航栏占 80px，中间部分占剩余空间 */
+    height: 100vh;
+    /* 设置高度为视口高度 */
+}
+
+.sidebar {
+    grid-column: 1 / 2;
+    /* 左边侧边导航栏占第一列 */
+    grid-row: 2 / 3;
+    /* 左边侧边导航栏占第二行 */
+    background-color: #f2f2f2;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar li {
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.sidebar li:hover {
+    background-color: #dcdcdc;
+}
+
+.header {
+    grid-column: 1 / -1;
+    /* 导航栏跨越所有列 */
+    grid-row: 1 / 2;
+    /* 导航栏占第一行 */
+    background-color: #333;
+    color: white;
+}
+
+.navbar {
+    display: flex;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: white;
+    padding: 10px;
+    transition: background-color 0.3s;
+}
+
+.navbar a:hover {
+    background-color: #555;
+}
+
+.main-content {
+    grid-column: 2 / -1;
+    /* 中间展示栏占第二列到最后一列 */
+    grid-row: 2 / -1;
+    /* 中间展示栏占第二行到最后一行 */
+    background-color: #e5e5e5;
+}

@@ -19,18 +19,18 @@ from src.schema import StockRequestSchema
 
 class BaseDao(object):
 
-    def _get_stock_stmt(self, schema: StockRequestSchema):
-        stmt = select(Stock).options(selectinload(Stock.groups))
-        if schema.code:
-            stmt = stmt.where(Stock.code == schema.code)
-        elif schema.name:
-            stmt = stmt.where(Stock.name == schema.name)
-        else:
+    def _get_stock_stmt(self, stock_iden: str):
+        stmt = select(Stock).options(selectinload(Stock.notes))
+        if not  stock_iden:
             raise ValueError("code or name is required")
+        elif stock_iden.isdigit():
+            stmt = stmt.where(Stock.code == stock_iden)
+        else:
+            stmt = stmt.where(Stock.name == stock_iden)
         return stmt
 
-    async def _get_stock(self, schema: StockRequestSchema, session: AsyncSession):
-        stmt = self._get_stock_stmt(schema)
+    async def _get_stock(self, stock_iden: str, session: AsyncSession):
+        stmt = self._get_stock_stmt(stock_iden)
         return (await session.execute(stmt)).scalars().first()
 
     def _get_group_stmt(self, group: str):
@@ -44,12 +44,12 @@ class BaseDao(object):
         return (await session.execute(stmt)).scalars().first()
 
     async def _get_group_and_stock(
-        self, schema: StockRequestSchema, session: AsyncSession
+        self, group_name: str, stock_iden: str, session: AsyncSession
     ) -> Tuple[Stock, Group]:
-        stock = await self._get_stock(schema, session)
+        stock = await self._get_stock(stock_iden, session)
         if not stock:
             raise ValueError("stock is already exists")
-        group: Group = await self._get_group(schema.group)
+        group: Group = await self._get_group(group_name, session)
         if not group:
             raise ValueError("group is not exists")
         return stock, group

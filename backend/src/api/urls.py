@@ -23,8 +23,9 @@ route_list = [
     ( "/api/qstock/ths-index-data", ThsIndexDataView, {"summary": "概念板块行情数据"}, ),
     #········
     ( "/api/stock/daily-overview", DailyOverviewView, {"summary": "当天概览"}, ),
-    ( "/api/stock/group", GroupView, {"summary": "股票分组"}, ),
-    ( "/api/stock/group_stock", GroupStockApiView, {"summary": "分组内股票管理"}, ),
+    ( "/api/stock/groups", GroupsView, {"summary": "股票所有分组"}, ),
+    ( "/api/stock/group/{group_name}", GroupView, {"summary": "股票分组"}, ),
+    ( "/api/stock/group/{group_name}/{stock_iden}", GroupStockApiView, {"summary": "分组内股票管理"}, ),
     ( "/api/stock/detail", DetailView, {"summary": "股票详情"}, ),
     ( "/api/stock/comment", CommentView, {"summary": "股票备注"}, ),
     #········
