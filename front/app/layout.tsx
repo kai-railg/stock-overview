@@ -1,3 +1,7 @@
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -24,6 +28,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head >
+        {/* 确保所有设备都能正确呈现和触摸缩放 */}
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
