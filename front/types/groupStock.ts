@@ -5,6 +5,12 @@ export interface Groups {
     }>;
 }
 
+export const StockTableRows = [
+    '代码', '名称', '涨幅', '最新', '最高',
+    '最低', '今开', '换手率', '量比', '市盈率',
+    '成交量', '成交额', '昨收', '总市值', '流通市值',
+    '市场', '时间'
+];
 
 // 定义完整数据结构接口
 export interface StockGroupData {
@@ -14,6 +20,7 @@ export interface StockGroupData {
         stock_info: StockInfo[];
     };
 }
+
 
 
 // 定义实时数据接口
@@ -45,3 +52,4 @@ interface StockInfo {
     code: string;
     realtime_data: RealtimeData;
 }
+

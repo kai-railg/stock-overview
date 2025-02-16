@@ -1,13 +1,16 @@
-
+import { AppBar, Box, Button, Toolbar } from "@mui/material"
 
 export default function Header() {
     return (
-        <div className="header">
-            <nav className="navbar" key="header-navbar">
-                <a href="#">自选</a>
-                <a href="#">发现</a>
-                <a href="#">搜索</a>
-            </nav>
-        </div>
+        <Box sx={{ flexGrow: 1 }}>
+            <AppBar position="static">
+                <Toolbar>
+                    <Button color="inherit">自选</Button>
+                    <Button color="inherit">发现</Button>
+                    <Button color="inherit">搜索</Button>
+                </Toolbar>
+            </AppBar>
+        </Box>
+
     )
 }

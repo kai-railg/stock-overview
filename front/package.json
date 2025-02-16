@@ -12,10 +12,13 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@fontsource/roboto": "^5.1.1",
+    "@mui/icons-material": "^6.4.4",
     "@mui/material": "^6.4.4",
+    "axios": "^1.7.9",
     "next": "15.1.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-virtuoso": "^4.12.5",
     "swr": "^2.3.2"
   },
   "devDependencies": {
