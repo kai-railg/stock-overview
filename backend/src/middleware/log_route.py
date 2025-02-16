@@ -45,7 +45,7 @@ class LogReqContextRoute(APIRoute):
             body = await request.body()
             req_body = try_format(body)
             res_body = try_format(response.body)
-            logger_req.info(f"new request \"{request.url.path}\": {req_info}")
+            logger_req.info(f'new request "{request.url.path}": {req_info}')
             logger_req.info(f"detail [{req_id}]\n<<<<<<<<<<<< \n{req_body}\n>>>>>>>>>>>>\n{res_body}\n============")
             return response
         return custom_route_handler

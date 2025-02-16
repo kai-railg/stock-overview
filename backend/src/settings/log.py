@@ -11,35 +11,6 @@ logger.remove(0)
 logger.add(sys.stderr, level="ERROR")
 logger.add(f"{LOG_DIR}/console.log", level="DEBUG")
 
-# 用于区分不同的日志句柄
-def log_name_filter(**kwargs):
-    def is_log_name(record):
-
-        extra_data: dict = record["extra"]
-
-        for k, v in kwargs.items():
-            if extra_data.get(k) != v:
-                return False
-        return True
-
-    return is_log_name
-
-# 自定义格式函数, 可以根据上下文数据区分日志格式
-def custom_format(record) -> str:
-    extra_data = record["extra"] or {}
-    format_str = f"{record['time']:YYYY-MM-DD > HH:mm:ss.SSS > zz WeekE} | {record['level'].name} | {record['message']}"
-
-    # fmd: format_map_data
-    fmd_list = []
-    for k, v in extra_data.items():
-        if k == "log_name":
-            continue
-        fmd_list.append(f"{k}:{v}")
-
-    if fmd_list:
-        format_str += f" | {','.join(fmd_list)}"
-    return format_str + "\n"
-
 
 # 配置日志格式和级别
 logger_config = dict(
@@ -47,7 +18,8 @@ logger_config = dict(
     retention="45 days",
     # 更多格式设置指令 https://loguru.readthedocs.io/en/stable/api/logger.html#record
     # format="{time:YYYY-MM-DD > HH:mm:ss.SSS > zz WeekE} | {level} | {message}",
-    format=custom_format,
+    format="[<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green>] | <level>{level: <4}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>"
+,
     # 压缩格式
     compression="gz",
     # 采用布尔值，并确定是否应启用终端着色。
@@ -67,7 +39,7 @@ logger_config = dict(
 )
 
 # bk: bind_kwargs
-def get_logger(log_name: str, bk=None, **kwargs):
+def get_logger(log_name: str, **kwargs):
 
     log_file = f"{LOG_DIR}/{log_name.strip('/')}.log"
 
@@ -75,17 +47,12 @@ def get_logger(log_name: str, bk=None, **kwargs):
     if not os.path.exists(log_path):
         os.makedirs(log_path, exist_ok=True)
 
-    bk = {**(bk or {}), "log_name": log_name}
-
     logger.add(
         log_file,
-        filter=log_name_filter(**bk),
-        **{
-            **logger_config,
-            **kwargs
-        })
+        filter=lambda record: record["extra"].get("log_name") == log_name, 
+        **{**logger_config, **kwargs})
 
-    return logger.bind(**bk)
+    return logger.bind(log_name=log_name)
 
 
 # fastapi_log
@@ -126,16 +93,5 @@ request_get_log  = get_logger("request_get")
 # https://betterstack.com/community/guides/logging/loguru/
 
 if __name__ == "__main__":
-    f_log = get_logger("f_log")
-    f_log.info("f_log")
-
-    request_post_log = get_logger("request_post")
-
-    with request_post_log.contextualize(vehicle_id="001"):
-        request_post_log.error("request_post_log")
-
-    request_get_log = get_logger("request_get", bk={"vehicle_id": "002"})
-    request_get_log.error("request_get_log")
-
-    request_get_log = get_logger("request_get", bk={"vehicle_id": "003"})
-    request_get_log.error("request_get_log")
+    request_post_log.error("{request_post_log}")
+    # request_get_log.info("new request /api/stock/groups: {'id': 4800837264, 'method': 'GET', 'param': dict_items([]), 'client': Address(host='127.0.0.1', port=59891)}")
