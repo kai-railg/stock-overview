@@ -13,12 +13,34 @@ class QstockAccess:
     def __init__(self):
         pass
 
-    def realtime_data(self, code):
+    def realtime_data(
+        self,
+        code,
+        hidden_keys=["最高", "最低", "今开	", "市盈率", "成交量", "昨收", "市场"],
+        convert_unit_keys=["成交额", "总市值", "流通市值"],
+    ):
         df: DataFrame = qs.stock_realtime(code)
+        keys = df.keys().tolist()
+        remove_idxs = []
+        for idx, key in enumerate(keys):
+            if key in hidden_keys:
+                remove_idxs.append(idx)
+        data = []
+        for values in df.values.tolist():
+            cur = []
+            for idx, val in enumerate(values):
+                if idx in remove_idxs:
+                    continue
+                elif keys[idx] in convert_unit_keys:
+                    cur.append(f"{round(float(val) / 100000000, 1)}")
+                else:
+                    cur.append(val)
+            cur and data.append(cur)
         return {
-            "keys": df.keys().tolist(),
-            "data": df.values.tolist(),
+            "keys": [key for key in keys if key not in hidden_keys],
+            "data": data,
         }
+
     def intraday_data(self, code: str | List) -> Dict[str, List]:
         df: DataFrame = qs.intraday_data(code=code)
         return {

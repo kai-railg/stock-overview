@@ -1,0 +1,57 @@
+table {
+    width: 100%;
+    border-collapse: collapse; /* 合并边框 */
+    overflow: hidden; /* 隐藏超出圆角的部分 */
+    border-radius: 10px; /* 圆角 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 阴影 */
+    overflow-y: auto;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: right;
+
+}
+th {
+    background-color: #f4f4f4;
+    resize: inline;
+    /* 表头背景色 */
+}
+tbody tr:hover {
+    background-color: #878a8a;
+    /* 悬停背景色 */
+}
+
+.groupHeader {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.groupHeader button {
+    margin: 3px 3px;
+    padding: 3px 6px;
+    background-color: #1714535e;
+    border: 1px solid #2b7fc8;
+    border-radius: 8px;
+}
+
+.addStock {
+    text-align: center;
+}
+
+input {
+    border: none;
+    border-bottom: 2px solid #58daaa;
+    padding: 5px;
+    width: 80px;
+    margin-right: 10px;
+}
+
+.visible {
+    display: block;
+}
+
+.hidden {
+    display: none;
+}

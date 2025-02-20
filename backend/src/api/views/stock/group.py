@@ -29,11 +29,16 @@ class GroupView(BaseApiView):
             # row
             # ['300377', '赢时胜', -1.43, 31.67, 32.2, 30.87, 31.05, 16.65, 0.64, -1282.97, 1072871, 3385650458.63, 32.13, 23786547784, 20404631965, '深A', '2025-02-14 15:34:24']
             stocks[row[0]]["realtime_data"] = {k:v for k, v in zip(realtime_data["keys"], row)}
+        keys = realtime_data["keys"]
 
+        for idx, key in enumerate(keys):
+            if key in ["成交额", "总市值", "流通市值"]:
+                keys[idx] = key + "（亿）"
         return {
             "data": {
                 "id": group.id,
                 "name": group.name,
+                "keys": keys,
                 "stock_info": [stock for stock in stocks.values()],
             }
         }

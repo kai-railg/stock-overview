@@ -12,17 +12,24 @@ from sqlalchemy import (
     Column,
     String,
     Integer,
-    Column, 
-    Integer, 
-    String, 
+    Column,
+    Integer,
+    String,
     Text,
     ForeignKey,
-    DateTime
+    DateTime,
+    Table,
 )
 from sqlalchemy.orm import relationship
 
 from .base import Base
 
+stock_board_association = Table(
+    "stock_board",
+    Base.metadata,
+    Column("stock_id", Integer, ForeignKey("stock.id"), primary_key=True),
+    Column("board_id", Integer, ForeignKey("board.id"), primary_key=True),
+)
 
 class Stock(Base):
     """
@@ -36,7 +43,29 @@ class Stock(Base):
     name = Column(String(20), nullable=False)
     market= Column(String(20), default="")
     notes = relationship("Note", back_populates="stock")
+    # 多对多关系
+    boards = relationship(
+        "Board",
+        secondary=stock_board_association,
+        back_populates="stocks",
+        lazy="dynamic",  # 启用动态加载
+    )
 
+class Board(Base):
+    """
+    行业概念板块
+    """
+    __tablename__ = "board"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String(30), nullable=False)
+    type = Column(String(20), default="")
+    # 反向多对多关系
+    stocks = relationship(
+        "Stock",
+        secondary=stock_board_association,
+        back_populates="boards",
+        cascade="save-update, merge",  # 级联设置
+    )
 class Note(Base):
     """
     股票便签

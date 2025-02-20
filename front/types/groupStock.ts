@@ -5,20 +5,15 @@ export interface Groups {
     }>;
 }
 
-export const StockTableRows = [
-    '代码', '名称', '涨幅', '最新', '最高',
-    '最低', '今开', '换手率', '量比', '市盈率',
-    '成交量', '成交额', '昨收', '总市值', '流通市值',
-    '市场', '时间'
-];
-
 // 定义完整数据结构接口
 export interface StockGroupData {
     data: {
         id: number;
-        name: string;
+        name: string; 
+        keys: string[];
         stock_info: StockInfo[];
     };
+    
 }
 
 
