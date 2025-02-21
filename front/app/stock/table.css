@@ -1,3 +1,7 @@
+.stockTable {
+    padding: 20px;
+}
+
 table {
     width: 100%;
     border-collapse: collapse; /* 合并边框 */
@@ -22,19 +26,6 @@ tbody tr:hover {
     /* 悬停背景色 */
 }
 
-.groupHeader {
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-}
-
-.groupHeader button {
-    margin: 3px 3px;
-    padding: 3px 6px;
-    background-color: #1714535e;
-    border: 1px solid #2b7fc8;
-    border-radius: 8px;
-}
 
 .addStock {
     text-align: center;
@@ -48,10 +39,30 @@ input {
     margin-right: 10px;
 }
 
-.visible {
+.linkDropdown {
+    position: relative;
+}
+
+.linkDropdown:hover .linkDropdownContent {
     display: block;
 }
 
-.hidden {
+.linkDropdownContent {
     display: none;
+    position: absolute;
+    background-color: #9badb1;
+    min-width: 80px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    padding: 3px 4px;
+    z-index: 1;
+}
+
+.linkDropdownContent div {
+    display: block;
+    border: 1px solid #ddd;
+    text-align: center;
+    border-radius: 4px;
+}
+.linkDropdownContent div:hover {
+    background-color: #f1f1f1;
 }

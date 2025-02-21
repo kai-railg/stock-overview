@@ -16,7 +16,7 @@ class QstockAccess:
     def realtime_data(
         self,
         code,
-        hidden_keys=["最高", "最低", "今开	", "市盈率", "成交量", "昨收", "市场"],
+        hidden_keys=["最高", "最低", "今开	", "市盈率", "成交量", "昨收"],
         convert_unit_keys=["成交额", "总市值", "流通市值"],
     ):
         df: DataFrame = qs.stock_realtime(code)

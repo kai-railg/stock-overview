@@ -11,28 +11,12 @@
     grid-template-columns: auto 1fr; /* 定义列宽 */
     height: 100vh; /* 让容器占满整个视口高度 */
     width: 100%; /* 确保容器宽度占满父容器 */
-    
+      
 }
 
-.header {
-    grid-column: 1 / -1; /* 顶部导航跨越所有列 */
-    background-color: #2d5b83;
-    color: white;
-    padding: 2px;
-}
 
-.header nav button:hover {
-    background-color: #2b7fc8;
-}
-.header nav button {
-    padding: 15px 40px;
-    text-align: center;
-}
-
-/* .header nav .logo { 
-    width: 90px;
-} */
 .sidebar {
+    grid-row: 1 / -1;
     background-color: #2d5b83;
     color: white;
 }
@@ -50,6 +34,13 @@
 }
 
 .content {
-    padding: 10px;
+    padding: 0px;
 }
 
+.visible {
+    display: block;
+}
+
+.hidden {
+    display: none;
+}

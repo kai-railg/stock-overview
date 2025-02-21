@@ -1,0 +1,17 @@
+.header {
+    grid-column: 2 / -1;
+    background-color: #2d5b83;
+    color: white;
+    padding: 2px;
+}
+
+.header nav button {
+    padding: 15px 40px;
+    text-align: center;
+}
+
+.header nav button:hover {
+    background-color: #2b7fc8;
+}
+
+

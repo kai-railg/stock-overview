@@ -43,9 +43,10 @@ class GroupDao(BaseDao):
         await session.commit()
 
     async def delete_group(self, group: str, session: AsyncSession):
-        if not self._get_group(group, session):
+        group_ins =await self._get_group(group, session)
+        if not group_ins: 
             raise ValueError("Group not found")
-        session.delete(Group(name=group))
+        await session.delete(group_ins)
         await session.commit()
 
     async def update_group(self, group_name: str, session: AsyncSession):
