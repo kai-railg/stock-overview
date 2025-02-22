@@ -26,8 +26,9 @@ route_list = [
     ( "/api/stock/groups", GroupsView, {"summary": "股票所有分组"}, ),
     ( "/api/stock/group/{group_name}", GroupView, {"summary": "股票分组"}, ),
     ( "/api/stock/group/{group_name}/{stock_iden}", GroupStockApiView, {"summary": "分组内股票管理"}, ),
-    ( "/api/stock/detail", DetailView, {"summary": "股票详情"}, ),
-    ( "/api/stock/comment", CommentView, {"summary": "股票备注"}, ),
+    ( "/api/stock/{stock_iden}/detail", DetailView, {"summary": "股票详情"}, ),
+    ( "/api/stock/{stock_iden}/notes", StockNotesView, {"summary": "股票所有便签"}, ),
+    ( "/api/stock/note/{note_id}", StockNoteView, {"summary": "股票便签管理"}, ),
     #········
     ( "/api/script/init_stock", InitStockScriptView, {"summary": "初始化股票"}, ),
 ]

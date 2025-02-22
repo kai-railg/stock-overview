@@ -19,6 +19,8 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-virtuoso": "^4.12.5",
+    "slate": "^0.112.0",
+    "slate-react": "^0.112.1",
     "swr": "^2.3.2"
   },
   "devDependencies": {

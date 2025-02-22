@@ -13,14 +13,15 @@ from sqlalchemy import (
 from sqlalchemy.orm import selectinload
 
 from src.settings import logger
-from src.db.models import Stock, Group
+from src.db.models import Stock, Group, Note, Board
 from src.schema import StockRequestSchema
 
 
 class BaseDao(object):
 
     def _get_stock_stmt(self, stock_iden: str):
-        stmt = select(Stock).options(selectinload(Stock.notes))
+        stmt = select(Stock).options(
+            selectinload(Stock.notes))
         if not  stock_iden:
             raise ValueError("code or name is required")
         elif stock_iden.isdigit():
@@ -31,6 +32,10 @@ class BaseDao(object):
 
     async def _get_stock(self, stock_iden: str, session: AsyncSession):
         stmt = self._get_stock_stmt(stock_iden)
+        return (await session.execute(stmt)).scalars().first()
+
+    async def _get_note(self, note_id: int, session: AsyncSession):
+        stmt = select(Note).where(Note.id == note_id)
         return (await session.execute(stmt)).scalars().first()
 
     def _get_group_stmt(self, group: str):

@@ -19,13 +19,39 @@ from sqlalchemy import (
 from sqlalchemy.orm import selectinload
 
 from src.settings import logger
-from src.db.models import Stock, Group
-from src.schema import StockRequestSchema
+from src.db.models import Stock, Group, Note
+from src.schema import StockRequestSchema, NoteSimpleSchema
 from .base import BaseDao
 
+class StockNoteDao(BaseDao):
 
-class StockDao(BaseDao):
+    async def get_node(self, note_id: int, session: AsyncSession):
+        return await self._get_note(note_id, session)
 
+    async def create_note(
+        self, stock_iden: str, note: NoteSimpleSchema, session: AsyncSession
+    ):
+        stock: Stock | None = await self._get_stock(stock_iden, session)
+        session.add(Note(note=note.note, stock=stock, date=note.date))
+        await session.commit()
+
+    async def update_note(self, note_id, note: NoteSimpleSchema, session: AsyncSession):
+        ins = await self._get_note(note_id, session)
+        ins.note = note.note
+        ins.date = note.date
+        await session.commit()
+
+    async def delete_note(self, note_id, session: AsyncSession):
+        note = await self._get_note(note_id, session)
+        if note:
+            await session.delete(note)
+            await session.commit()
+
+class StockDao(StockNoteDao):
+
+    async def get_stock(self, stock_iden: str, session: AsyncSession):
+        return await self._get_stock(stock_iden, session)
+        
 
     async def bulk_insert_stock(self, data_list: List[Dict], session: AsyncSession):
         await session.execute(insert(Stock), data_list)
