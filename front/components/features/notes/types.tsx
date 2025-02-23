@@ -1,7 +1,7 @@
 export interface Note {
     note: string;
     date: string;
-    note_id: number;
+    id: number;
 }
 
 export interface Stock {

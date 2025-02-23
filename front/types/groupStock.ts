@@ -17,7 +17,6 @@ export interface StockGroupData {
 }
 
 
-
 // 定义实时数据接口
 interface RealtimeData {
     代码: string;

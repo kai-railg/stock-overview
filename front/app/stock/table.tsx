@@ -65,7 +65,7 @@ export function StockCompotent(
                         </td>
                     </tr>
                 ))}
-                <tr key='addStock'>
+                <tr>
                     <td className={`addStock ${display ? 'visible' : 'hidden'}`}>
                         <button onClick={handleSetDisplay}>+</button>
                     </td>
