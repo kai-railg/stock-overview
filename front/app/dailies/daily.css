@@ -1,0 +1,120 @@
+.search-container {
+    float: right;
+}
+
+.search-container input[type=text] {
+    padding: 6px;
+    margin-top: 8px;
+    font-size: 17px;
+    border: none;
+    color: black;
+}
+
+.search-container button {
+    cursor: pointer;
+}
+
+.dailies-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.add-daily {
+    background: #3b82f6;
+    color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.add-daily:hover {
+    transform: translateY(-2px);
+    background: #2563eb;
+}
+
+.dailies {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.daily {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    position: relative;
+    transition: box-shadow 0.2s;
+}
+
+.daily:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.daily-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.daily-title {
+    color: #64748b;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.daily-content {
+    white-space: pre-wrap;
+    line-height: 1.6;
+    color: #334155;
+}
+
+.daily-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-btn {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    color: #64748b;
+    font-size: 1.2rem;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    min-width: 70px;
+    overflow: hidden;
+    z-index: 10;
+}
+
+.daily-dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content button {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: none;
+    background: none;
+    text-align: left;
+    color: #64748b;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.dropdown-content button:hover {
+    background: #f1f5f9;
+}

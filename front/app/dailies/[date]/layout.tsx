@@ -1,4 +1,4 @@
-export default function DailyRootLayout({
+export default function StockRootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;

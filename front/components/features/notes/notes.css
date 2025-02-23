@@ -69,9 +69,10 @@
 /* 上部大文字区域 */
     flex: 1;
     /* 占据剩余空间的70% */
-    font-size: 1.2rem;
+    font-size: 0.8rem;
     /* 大字号 */
     font-weight: 500;
+    margin: 20px 10px;
     color: #333;
     /* 文字超出处理 */
     overflow: hidden;

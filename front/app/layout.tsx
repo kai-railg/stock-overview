@@ -45,7 +45,7 @@ export default function RootLayout({
             <nav>
               <Link href={'/'}><button>logo</button></Link>
               <Link href={'/stock'}><button>行情</button></Link>
-              <Link href={'/daily'}><button>日报</button></Link>
+              <Link href={'/dailies'}><button>日报</button></Link>
               <Link href={'/notes'}><button>便签</button></Link>
             </nav>
           </div>
