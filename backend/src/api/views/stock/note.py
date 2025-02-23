@@ -17,7 +17,7 @@ class StockNoteView(BaseApiView):
         note_id: int, 
         session: AsyncSession = Depends(get_db),
     ):
-        note = await stock_dao.get_node(note_id, session)
+        note = await stock_dao.get_note(note_id, session)
         data = {}
         if note:
             data = NoteSchema.model_validate(note).model_dump()

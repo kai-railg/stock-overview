@@ -1,0 +1,58 @@
+.notes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+}
+
+
+.note {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 10px;
+    padding: 5px;
+    border: 1px solid #edebe7;
+    border-radius: 8px;
+    overflow: hidden;
+    text-overflow: clip;
+    width: 200px;
+    height: 200px;
+}
+
+.note:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+}
+
+.note-top {
+/* 上部大文字区域 */
+    flex: 1;
+    /* 占据剩余空间的70% */
+    font-size: 1.2rem;
+    /* 大字号 */
+    font-weight: 500;
+    color: #333;
+    /* 文字超出处理 */
+    overflow: hidden;
+    display: block;
+    line-height: 1.5;
+    margin-bottom: 8px;
+}
+
+.note-bottom {
+flex: 0 0 30%;
+    /* 固定高度占比30% */
+    font-size: 0.9rem;
+    /* 小字号 */
+    color: #666;
+    /* 文字超出处理 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    line-height: 1.4;
+    border-top: 1px solid #eee;
+    padding-top: 8px;
+}

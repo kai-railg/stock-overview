@@ -1,0 +1,15 @@
+.search-container {
+    float: right;
+}
+
+.search-container input[type=text] {
+    padding: 6px;
+    margin-top: 8px;
+    font-size: 17px;
+    border: none;
+    color: black;
+}
+
+.search-container button {
+    cursor: pointer;
+}

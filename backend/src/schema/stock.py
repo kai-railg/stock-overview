@@ -8,7 +8,7 @@
 from datetime import datetime, timezone
 from typing import List, Dict
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_serializer
 
 class NoteSimpleSchema(BaseModel):
     note: str
@@ -22,6 +22,13 @@ class NoteSchema(NoteSimpleSchema):
     stock_id: int
     model_config = ConfigDict(arbitrary_types_allowed=True, from_attributes=True)
 
+    @model_serializer
+    def model_ser(self) -> Dict:
+        return {
+            "id": self.id,
+            "note": self.note,
+            "date": datetime.strftime(self.date, "%Y-%m-%d %H:%M:%S"),
+        }
 
 class StockSchema(BaseModel):
     id: int
@@ -30,3 +37,12 @@ class StockSchema(BaseModel):
     market: str
     notes: List[NoteSchema]
     model_config = ConfigDict(arbitrary_types_allowed=True, from_attributes=True)
+
+    @model_serializer
+    def model_ser(self) -> Dict:
+        return {
+            "name": self.name,
+            "code": self.code,
+            "id": self.id,
+            "market": self.market,
+        }

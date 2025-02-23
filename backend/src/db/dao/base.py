@@ -38,6 +38,11 @@ class BaseDao(object):
         stmt = select(Note).where(Note.id == note_id)
         return (await session.execute(stmt)).scalars().first()
 
+    async def _get_notes(self, session: AsyncSession):
+        return (await session.execute(
+            select(Note).options(selectinload(Note.stock)))
+        ).scalars()
+
     def _get_group_stmt(self, group: str):
         stmt = select(Group)
         if group:

@@ -25,8 +25,11 @@ from .base import BaseDao
 
 class StockNoteDao(BaseDao):
 
-    async def get_node(self, note_id: int, session: AsyncSession):
+    async def get_note(self, note_id: int, session: AsyncSession):
         return await self._get_note(note_id, session)
+
+    async def get_notes(self, session: AsyncSession):
+        return await self._get_notes(session)
 
     async def create_note(
         self, stock_iden: str, note: NoteSimpleSchema, session: AsyncSession

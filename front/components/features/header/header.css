@@ -1,6 +1,6 @@
 .header {
     grid-column: 2 / -1;
-    background-color: #2d5b83;
+    background-color: #333;
     color: white;
     padding: 2px;
 }
@@ -11,7 +11,7 @@
 }
 
 .header nav button:hover {
-    background-color: #2b7fc8;
+    background-color: #111;
 }
 
 
