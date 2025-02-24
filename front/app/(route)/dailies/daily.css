@@ -15,7 +15,7 @@
 }
 
 .dailies-container {
-    max-width: 800px;
+    max-width: 100%;
     margin: 2rem auto;
     padding: 0 1rem;
 }
@@ -62,7 +62,7 @@
 }
 
 .daily-title {
-    color: #64748b;
+    color: #cd0257;
     font-size: 0.9rem;
     font-weight: 500;
 }

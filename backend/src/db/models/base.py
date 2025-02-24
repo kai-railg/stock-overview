@@ -60,7 +60,7 @@ async def auto_create_database():
     # EXECUTE stmt;
     # DEALLOCATE PREPARE stmt;
 
-    with get_db_with_generator() as session:
+    with get_db() as session:
         result = session.execute(
             sqlalchemy.text(
                 "SELECT COUNT(*) AS db_exists FROM information_schema.SCHEMATA WHERE SCHEMA_NAME = 'inventory'"
@@ -73,5 +73,5 @@ async def auto_create_database():
 
 
 if __name__ == "__main__":
-    with get_db_with_generator() as session:
+    with get_db() as session:
         raise Exception("test")

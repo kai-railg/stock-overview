@@ -22,7 +22,8 @@ route_list = [
     ( "/api/qstock/ths-index-member", ThsIndexMemberView, {"summary": "概念板块成分股"}, ),
     ( "/api/qstock/ths-index-data", ThsIndexDataView, {"summary": "概念板块行情数据"}, ),
     #········
-    ( "/api/stock/daily-overview", DailyOverviewView, {"summary": "当天概览"}, ),
+    ( "/api/stock/dailies", DailisView, {"summary": "当天概览"}, ),
+    ( "/api/stock/daily/{date}", DailyView, {"summary": "当天概览"}, ),
     ( "/api/stock/groups", GroupsView, {"summary": "股票所有分组"}, ),
     ( "/api/stock/group/{group_name}", GroupView, {"summary": "股票分组"}, ),
     ( "/api/stock/group/{group_name}/{stock_iden}", GroupStockApiView, {"summary": "分组内股票管理"}, ),
@@ -30,6 +31,10 @@ route_list = [
     ( "/api/stock/notes", NotesView, {"summary": "股票所有便签"}, ),
     ( "/api/stock/notes/{stock_iden}", StockNotesView, {"summary": "股票所有便签"}, ),
     ( "/api/stock/note/{note_id}", StockNoteView, {"summary": "股票便签管理"}, ),
+    ( "/api/stock/trades", StockTradesView, {"summary": "获取所有股票交易记录"}, ),
+    ( "/api/stock/trade", StockTradePostView, {"summary": "创建股票交易记录"}, ),
+    ( "/api/stock/trade/{trade_id}", StockTradeView, {"summary": "查删改股票交易记录"}, ),
+
     #········
     ( "/api/script/init_stock", InitStockScriptView, {"summary": "初始化股票"}, ),
 ]

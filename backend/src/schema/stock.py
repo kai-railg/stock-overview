@@ -4,7 +4,7 @@
 # @FileName      : note
 # @Time          : 2025-02-22 10:29:48
 """
-
+import enum
 from datetime import datetime, timezone
 from typing import List, Dict
 
@@ -46,3 +46,51 @@ class StockSchema(BaseModel):
             "id": self.id,
             "market": self.market,
         }
+
+class DailyRequSchema(BaseModel):
+    title: str
+    content: str
+
+class DailyRespSchema(BaseModel):
+    date: str
+    id: int
+    title: str
+    content: str
+    model_config = ConfigDict(arbitrary_types_allowed=True, from_attributes=True)
+
+
+class DailyRequSchema(BaseModel):
+    title: str
+    content: str
+
+class TradeType(enum.IntEnum):
+    buy = 1
+    sell = 2
+
+class TradeRequSchema(BaseModel):
+    trade_date: datetime = Field(
+        default_factory=lambda: datetime.now(timezone.utc)
+        .astimezone(None)
+        .replace(tzinfo=None)
+    )
+    trade_type: TradeType
+    price: int
+    volume: int
+    fee: float = 0.0002
+    reason: str
+    stock_iden: str | int
+
+class TradeRespSchema(BaseModel):
+    id: int
+    trade_date: datetime = Field(
+        default_factory=lambda: datetime.now(timezone.utc).astimezone(None).replace(tzinfo=None)
+    )
+    trade_type: TradeType
+    price: int
+    volume: int
+    fee: float
+    returns: int
+    reason: str
+    stock_id: int
+
+    model_config = ConfigDict(arbitrary_types_allowed=True, from_attributes=True)

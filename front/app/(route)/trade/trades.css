@@ -1,0 +1,94 @@
+.trade-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.trade-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: #f5f5f5;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+
+.trade-item:hover {
+    transform: translateX(5px);
+}
+
+.trade-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex-grow: 1;
+}
+
+.stock-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stock-name {
+    font-weight: bold;
+    color: #333;
+}
+
+.trade-date {
+    color: #666;
+}
+
+.price-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price {
+    font-weight: bold;
+    color: #333;
+}
+
+.price-unit {
+    color: #666;
+    font-size: 0.8em;
+}
+
+.volume {
+    color: #666;
+}
+
+_returns {
+    color: #666;
+}
+
+.trade-actions {
+    display: flex;
+    gap: 0.5rem;
+    color: white;
+}
+
+.view-details {
+    padding: 0.3rem 0.6rem;
+    background: #007bff;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.copy {
+    padding: 0.3rem 0.6rem;
+    background: #4CAF50;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.trade-list-container:last-child {
+    margin-bottom: 0;
+}

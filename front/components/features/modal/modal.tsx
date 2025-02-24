@@ -108,3 +108,70 @@ export function DailyModal(
         </div>
     );
 }
+
+export interface TradeModalInterface  {
+    trade_type: number,
+    price: number,
+    volume: number,
+    reason: string,
+    stock: string
+}
+export function TradeModal(
+    { inintialTrade, onSave, onClose }: {
+        inintialTrade: TradeModalInterface,
+        onSave: (trade: TradeModalInterface) => void,
+        onClose?: () => void
+    }
+) {
+    const [trade, setTrade] = useState<TradeModalInterface>(inintialTrade);
+    const [isOpen, setIsOpen] = useState(true);
+
+    console.log(trade)
+    const handleClose = () => {
+        setIsOpen(false);
+        onClose?.();
+    };
+
+    const handleSave = () => {
+        onSave?.(trade);
+        handleClose();
+    };
+
+    if (!isOpen) return null;
+
+    return (
+        <div className="modal-overlay">
+            <div className="modal-container">
+                <h2>编辑内容</h2>
+                {
+                    Object.keys(trade).map((key) => {
+                        return (
+                        <>
+                        {key}: <textarea
+                            className="resizable-textarea"
+                            key={key}
+                            value={trade[key as keyof TradeModalInterface]}
+                            onChange={(e) => {
+                                setTrade({
+                                    ...trade,
+                                    [key]: e.target.value
+                                })
+                            }} />
+                        </>
+                        )
+                    })
+                }
+                <div className="button-group">
+                    <button className="cancel-button" onClick={handleClose}>
+                        取消
+                    </button>
+                    <button className="confirm-button" onClick={handleSave}>
+                        创建
+                    </button>
+                </div>
+
+
+            </div>
+        </div>
+    );
+}

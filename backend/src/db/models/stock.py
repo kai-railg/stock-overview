@@ -19,6 +19,7 @@ from sqlalchemy import (
     ForeignKey,
     DateTime,
     Table,
+    Float
 )
 from sqlalchemy.orm import relationship
 
@@ -30,6 +31,7 @@ stock_board_association = Table(
     Column("stock_id", Integer, ForeignKey("stock.id"), primary_key=True),
     Column("board_id", Integer, ForeignKey("board.id"), primary_key=True),
 )
+
 
 class Stock(Base):
     """
@@ -43,6 +45,8 @@ class Stock(Base):
     name = Column(String(20), nullable=False)
     market= Column(String(20), default="")
     notes = relationship("Note", back_populates="stock")
+    trades = relationship("Trade", back_populates="stock")
+
     # 多对多关系
     boards = relationship(
         "Board",
@@ -119,3 +123,36 @@ class Group(Base):
             return {}
     def set_stock_info(self, stock_info):
         self.stock_info = json.dumps(stock_info)
+
+
+class Daily(Base):
+    """
+    每日总结
+    """
+
+    __tablename__ = "daily"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    date = Column(String(20), unique=True, nullable=False, index=True)
+    title = Column(String(100))
+    content = Column(Text)
+
+
+class Trade(Base):
+    """
+    股票交易记录
+    """
+
+    __tablename__ = "trade"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+
+    trade_date = Column(DateTime, default=datetime.now)
+    trade_type = Column(Integer)  # "交易类型: 1买, 2卖"
+
+    price = Column(Integer) # "交易价格"
+    volume = Column(Integer)  # 交易数量
+    fee = Column(Float, default=0.0002)  # 交易手续费比例
+    returns = Column(Integer, default=0) # 本次收益
+    reason = Column(String(300)) # 交易原因
+
+    stock_id = Column(Integer, ForeignKey("stock.id"))
+    stock = relationship("Stock", back_populates="trades")
