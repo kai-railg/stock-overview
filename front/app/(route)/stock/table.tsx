@@ -1,5 +1,6 @@
 import { StockGroupData } from '@/types/groupStock';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import useSWR from 'swr';
 import './table.css';
@@ -11,7 +12,7 @@ export function StockCompotent(
         groupStockName: string
     }
 ) {
-
+    const router = useRouter();
     const { data: groupStocks } = useSWR<StockGroupData>(`http://localhost:8000/api/stock/group/${groupStockName}`, fetcher)
 
     const [display, setDisplay] = useState(true);
@@ -61,6 +62,8 @@ export function StockCompotent(
                             <div className="linkDropdownContent">
                                 <div><a target="_blank" href={`https://xueqiu.com/S/${stock.realtime_data['市场'] === "深A" ? "SZ" : "SH"}${stock.realtime_data.代码}`}>雪球</a></div>
                                 <div><a target="_blank" href={`https://guba.eastmoney.com/list,${stock.realtime_data.代码}.html`}>东财</a></div>
+                                <div><a onClick={()=>{router.push(`/notes/stock/${stock.name}`)}}>便签</a></div>
+                                <div><a onClick={() => { router.push(`/trade`) } }>交易</a></div>
                             </div>
                         </td>
                     </tr>
