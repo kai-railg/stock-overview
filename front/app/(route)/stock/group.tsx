@@ -31,6 +31,23 @@ const handleDeleteGroupSubmit = async (groupName: string) => {
         console.error('提交失败:', error);
     }
 };
+export function GroupButton(
+    { name, OnClick }:
+    { name: string, OnClick: () => void }) {
+    return (
+        <button className="
+          border-solid border-2 border-black
+          px-1 py-1 text-color-black font-bold
+          bg-sky-100/50
+          rounded-xl 
+          hover:shadow-sky-300/70 
+          hover:shadow-md"
+            onClick={()=> OnClick()}
+        >
+            {name}
+        </button>
+    )
+}
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 export function GroupComponent(
     {
@@ -65,16 +82,20 @@ export function GroupComponent(
             {groups?.data?.map((group) => (
    
                 <div>
-
-                    <button
-                        className={groupStockName === group.name ? 'group-button-active' : ''}
-                        key={group.id}
-                        onClick={() => setGroupStockName(group.name)}
-                        onContextMenu={(e)=>handleRightClick(e, group.name)}
-                    >
-                        {group.name}
-                    </button>
-                    <div className={`group-button-menu ${updateGroupName === group.name ? 'visible' : 'hidden'}`}>
+                    {/* group 栏目 */}
+                    <div className="
+                        w-full px-1 py-1
+                        flex flex-auto flex-row flex-wrap 
+                        border-solid border-black
+                        text-color-black font-bold
+                        bg-sky-200
+                    ">
+                        <GroupButton 
+                            name={group.name} 
+                            OnClick={() => setGroupStockName(group.name)}>
+                        </GroupButton>
+                    </div>
+                    {/* <div className={`group-button-menu ${updateGroupName === group.name ? 'visible' : 'hidden'}`}>
                         <div>
                             <button onClick={() => (handleDeleteGroupSubmit(updateGroupName), setUpdateGroupName(''))}>
                                 删除分组</button>
@@ -85,12 +106,12 @@ export function GroupComponent(
                         </div>
 
 
-                    </div>
+                    </div> */}
                 </div>
 
             ))}
 
-            <button className={`addGroup ${display ? 'visible' : 'hidden'}`} onClick={handleSetDisplay}>+</button>
+            {/* <button className={`addGroup ${display ? 'visible' : 'hidden'}`} onClick={handleSetDisplay}>+</button>
             <input
                 className={`${display ? 'hidden' : 'visible'}`}
                 type="text"
@@ -98,7 +119,7 @@ export function GroupComponent(
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
 
-            />
+            /> */}
             <button
                 className={`${display ? 'hidden' : 'visible'}`}
                 style={{ background: "white" }}

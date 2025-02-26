@@ -12,18 +12,6 @@
     border-radius: 8px;
 }
 
-.groupHeader button:hover {
-    background-color: #2b7fc8;
-}
-
-.group-button-active {
-    background-color: #2b7fc8;
-}
-
-.group-button-menu {
-    position: relative;
-    
-}
 
 /* .group-button-menu:hover div {
     display: block;
