@@ -1,10 +1,10 @@
+import { CreateGroupModal, UpdateGroupModal } from '@/components/features/modal/modal';
 import { Groups } from '@/types/groupStock';
 import axios from 'axios';
 import { useState } from 'react';
 import useSWR from 'swr';
-import './group.css';
 
-const handleAddGroupSubmit = async (groupName: string) => {
+const handleAddGroup = async (groupName: string) => {
     if (!groupName) {
         return;
     }
@@ -12,13 +12,13 @@ const handleAddGroupSubmit = async (groupName: string) => {
         const response = await axios.post(
             `http://localhost:8000/api/stock/group/${groupName}`,
         );
-        console.log('创建成功:', response.data);
+        console.log('创建成功:', response);
     } catch (error) {
         console.error('提交失败:', error);
     }
 };
 
-const handleDeleteGroupSubmit = async (groupName: string) => {
+const handleDeleteGroup = async (groupName: string) => {
     if (!groupName) {
         return;
     }
@@ -34,18 +34,65 @@ const handleDeleteGroupSubmit = async (groupName: string) => {
 export function GroupButton(
     { name, OnClick }:
     { name: string, OnClick: () => void }) {
+
+    const [hiddenStatus, setHiddenStatus] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    function UpdateEvent({newGroupName}: {newGroupName: string}) {
+        return 
+    }
     return (
-        <button className="
-          border-solid border-2 border-black
-          px-1 py-1 text-color-black font-bold
-          bg-sky-100/50
-          rounded-xl 
-          hover:shadow-sky-300/70 
-          hover:shadow-md"
-            onClick={()=> OnClick()}
-        >
-            {name}
-        </button>
+        // 分组的栏目
+        <div className='relative'>
+            <button className="
+                border-solid border-2 border-black
+                px-2 py-1 m-1
+                text-color-black font-bold
+                bg-sky-100/50
+                rounded-xl 
+                hover:bg-blue-500/50
+                hover:shadow-blue-500/50 
+                hover:shadow-md"
+                onClick={() => OnClick()}
+                onContextMenu={(e) => { e.preventDefault(), setHiddenStatus(!hiddenStatus) }}
+            >
+                {name}
+            </button>
+            {/* 分组的操作按钮 */}
+            <div className={`"
+                absolute ${hiddenStatus ? 'block' : 'hidden'}
+                box-border border border-collapse w-32 h-16 
+                flex flex-col justify-center items-center
+                bg-white text-black z-10
+            "`}>
+                <button className='
+                    flex-auto border-solid border border-black
+                    w-full h-full hover:bg-blue-500/50'
+                    onClick={() => setShowModal(true)}
+                >
+                    更新名称
+                </button>
+                {showModal &&
+                    <UpdateGroupModal
+                        initialText={name}
+                        onSave={UpdateEvent}
+                        onClose={() => setShowModal(false)}
+                    ></UpdateGroupModal>
+                }
+                <button className='
+                    flex-auto border-solid border border-black
+                    w-full h-full hover:bg-blue-500/50'
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        if (window.confirm("确定要删除此笔记吗？")) {
+                            handleDeleteGroup(name)
+                        }
+                        setShowModal(false)
+                    }}
+                >
+                    删除分组
+                </button>
+            </div>
+        </div>
     )
 }
 const fetcher = (url: string) => fetch(url).then(res => res.json());
@@ -60,74 +107,44 @@ export function GroupComponent(
 ) {
     const { data: groups } = useSWR<Groups>('http://localhost:8000/api/stock/groups', fetcher)
 
-    const [display, setDisplay] = useState(true);
-    const [inputValue, setInputValue] = useState('');
-    const [updateGroupName, setUpdateGroupName] = useState('');
-    const handleSetDisplay = () => {
-        setDisplay(!display);
-    }
+    const [showModal, setShowModal] = useState(false);
+    const [content, setContent] = useState('');
 
-    const handleRightClick = (e: React.MouseEvent, name: string) => {
-        e.preventDefault(); // 阻止浏览器默认右键菜单
-        if (name !== updateGroupName) {
-            setUpdateGroupName(name);
-        } else {
-            setUpdateGroupName('');
-        }
+    const handleSave = (text: string) => {
+        handleAddGroup(text);
+        setContent('');
     };
 
+
     return (
-        <nav className="groupHeader">
+        <div className="
+            w-full px-2 py-2 mb-4
+            flex flex-auto flex-row flex-wrap 
+            border-solid border-black
+            text-color-black font-bold
+            bg-sky-200
+            ">  
             
             {groups?.data?.map((group) => (
-   
-                <div>
-                    {/* group 栏目 */}
-                    <div className="
-                        w-full px-1 py-1
-                        flex flex-auto flex-row flex-wrap 
-                        border-solid border-black
-                        text-color-black font-bold
-                        bg-sky-200
-                    ">
-                        <GroupButton 
-                            name={group.name} 
-                            OnClick={() => setGroupStockName(group.name)}>
-                        </GroupButton>
-                    </div>
-                    {/* <div className={`group-button-menu ${updateGroupName === group.name ? 'visible' : 'hidden'}`}>
-                        <div>
-                            <button onClick={() => (handleDeleteGroupSubmit(updateGroupName), setUpdateGroupName(''))}>
-                                删除分组</button>
-                            <button>更新名称
-
-                            </button>
-
-                        </div>
-
-
-                    </div> */}
-                </div>
-
+                <GroupButton 
+                    key={group.id}
+                    name={group.name} 
+                    OnClick={() => setGroupStockName(group.name)}>
+                </GroupButton>
             ))}
-
-            {/* <button className={`addGroup ${display ? 'visible' : 'hidden'}`} onClick={handleSetDisplay}>+</button>
-            <input
-                className={`${display ? 'hidden' : 'visible'}`}
-                type="text"
-                placeholder='分组名称'
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-
-            /> */}
             <button
-                className={`${display ? 'hidden' : 'visible'}`}
-                style={{ background: "white" }}
-                onClick={() => (
-                    handleAddGroupSubmit(inputValue), 
-                    handleSetDisplay(), 
-                    setInputValue(""))}
-            >{inputValue ? "✅" : "x"}</button>
-        </nav>
+            className='ml-4 font-semibold text-2xl'
+                onClick={() => setShowModal(true)}>
+                <span>+</span>
+            </button>
+
+            {showModal && (
+                <CreateGroupModal
+                    initialText={content}
+                    onSave={handleSave}
+                    onClose={() => setShowModal(false)}
+                />
+            )}
+        </div>
     )
 }
