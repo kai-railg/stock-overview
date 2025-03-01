@@ -30,6 +30,9 @@ class BaseDao(object):
             stmt = stmt.where(Stock.name == stock_iden)
         return stmt
 
+    async def get_stocks(self, session: AsyncSession):
+        return (await session.execute(select(Stock))).scalars()
+
     async def _get_stock(self, stock_iden: str, session: AsyncSession):
         stmt = self._get_stock_stmt(stock_iden)
         return (await session.execute(stmt)).scalars().first()

@@ -52,6 +52,7 @@ export function GroupButton(
                 hover:bg-blue-500/50
                 hover:shadow-blue-500/50 
                 hover:shadow-md"
+                
                 onClick={() => OnClick()}
                 onContextMenu={(e) => { e.preventDefault(), setHiddenStatus(!hiddenStatus) }}
             >

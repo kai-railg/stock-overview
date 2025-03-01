@@ -14,13 +14,13 @@ from src.api.views import *
 router = new_router()
 
 route_list = [
-    ( "/api/qstock/realtime", RealtimeView, {"summary": "股票最新行情数据"}, ),
-    ( "/api/qstock/intraday", IntradayView, {"summary": "股票日内成交数据"}, ),
-    ( "/api/qstock/history", HistoryView, {"summary": "股票历史行情数据"}, ),
-    ( "/api/qstock/billboard", BillBoardView, {"summary": "龙虎榜"}, ),
-    ( "/api/qstock/ths-index-name", ThsIndexNameView, {"summary": "概念板块"}, ),
-    ( "/api/qstock/ths-index-member", ThsIndexMemberView, {"summary": "概念板块成分股"}, ),
-    ( "/api/qstock/ths-index-data", ThsIndexDataView, {"summary": "概念板块行情数据"}, ),
+    # ( "/api/qstock/realtime", RealtimeView, {"summary": "股票最新行情数据"}, ),
+    # ( "/api/qstock/intraday", IntradayView, {"summary": "股票日内成交数据"}, ),
+    # ( "/api/qstock/history", HistoryView, {"summary": "股票历史行情数据"}, ),
+    # ( "/api/qstock/billboard", BillBoardView, {"summary": "龙虎榜"}, ),
+    # ( "/api/qstock/ths-index-name", ThsIndexNameView, {"summary": "概念板块"}, ),
+    # ( "/api/qstock/ths-index-member", ThsIndexMemberView, {"summary": "概念板块成分股"}, ),
+    # ( "/api/qstock/ths-index-data", ThsIndexDataView, {"summary": "概念板块行情数据"}, ),
     #········
     ( "/api/stock/dailies", DailisView, {"summary": "当天概览"}, ),
     ( "/api/stock/daily/{date}", DailyView, {"summary": "当天概览"}, ),
@@ -34,7 +34,8 @@ route_list = [
     ( "/api/stock/trades", StockTradesView, {"summary": "获取所有股票交易记录"}, ),
     ( "/api/stock/trade", StockTradePostView, {"summary": "创建股票交易记录"}, ),
     ( "/api/stock/trade/{trade_id}", StockTradeView, {"summary": "查删改股票交易记录"}, ),
-
+    #........
+    ( "/api/select/select", SelectView, {"summary": "选股"}),
     #········
     ( "/api/script/init_stock", InitStockScriptView, {"summary": "初始化股票"}, ),
 ]

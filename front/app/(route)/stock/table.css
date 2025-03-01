@@ -1,68 +1,14 @@
-.stockTable {
-    padding: 20px;
-}
 
-table {
-    width: 100%;
-    border-collapse: collapse; /* 合并边框 */
-    overflow: hidden; /* 隐藏超出圆角的部分 */
-    border-radius: 10px; /* 圆角 */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 阴影 */
-    overflow-y: auto;
-}
 th, td {
     border: 1px solid #ddd;
     padding: 8px;
-    text-align: right;
-
 }
 th {
     background-color: #f4f4f4;
     resize: inline;
     /* 表头背景色 */
 }
-tbody tr:hover {
+tr:hover {
     background-color: #878a8a;
     /* 悬停背景色 */
-}
-
-
-.addStock {
-    text-align: center;
-}
-
-input {
-    border: none;
-    border-bottom: 2px solid #58daaa;
-    padding: 5px;
-    width: 80px;
-    margin-right: 10px;
-}
-
-.linkDropdown {
-    position: relative;
-}
-
-.linkDropdown:hover .linkDropdownContent {
-    display: block;
-}
-
-.linkDropdownContent {
-    display: none;
-    position: absolute;
-    background-color: #9badb1;
-    min-width: 80px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    padding: 3px 4px;
-    z-index: 1;
-}
-
-.linkDropdownContent div {
-    display: block;
-    border: 1px solid #ddd;
-    text-align: center;
-    border-radius: 4px;
-}
-.linkDropdownContent div:hover {
-    background-color: #f1f1f1;
 }

@@ -5,7 +5,6 @@ from src.middleware.api_view import BaseApiView
 from src.access import qstock_access
 from src.schema import RealtimeRequestSchema
 
-
 class RealtimeView(BaseApiView):
 
     def get(self, body: RealtimeRequestSchema):

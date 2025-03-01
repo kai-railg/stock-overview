@@ -3,11 +3,12 @@
 
 from src.middleware.api_view import BaseApiView
 from src.access import qstock_access
-from src.schema import IntradayRequestSchema
+from src.db.dao import stock_dao
 
 
 class IntradayView(BaseApiView):
 
-    def get(self, body: IntradayRequestSchema):
-        data = qstock_access.intraday_data(body.code)
+    def get(self, stock_iden: str):
+        stock = stock_dao.get_stock(stock_iden)
+        data = qstock_access.intraday_data(stock_iden)
         return data

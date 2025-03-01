@@ -1,6 +1,5 @@
 'use client'
 import { StockTable } from "./stock"
-import './table.css'
 
 
 

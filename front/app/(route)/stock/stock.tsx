@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { GroupComponent } from './group';
 import { StockCompotent } from './table';
-import './table.css';
 
 
 

@@ -43,7 +43,7 @@ class Stock(Base):
 
     code = Column(String(20), unique=True, nullable=False)
     name = Column(String(20), nullable=False)
-    market= Column(String(20), default="")
+    market= Column(String(20), default="") # SZ; SH
     notes = relationship("Note", back_populates="stock")
     trades = relationship("Trade", back_populates="stock")
 

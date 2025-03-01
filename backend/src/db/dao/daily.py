@@ -30,7 +30,7 @@ class DailyDao(BaseDao):
         pass
 
     async def get_dailies(self, session: AsyncSession):
-        return (await session.execute(select(Daily))).scalars()
+        return (await session.execute(select(Daily).order_by(Daily.id.desc()))).scalars()
 
     async def get_daily(self, date: str, session: AsyncSession):
         smtm = select(Daily)

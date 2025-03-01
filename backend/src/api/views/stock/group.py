@@ -2,7 +2,7 @@
 
 from src.middleware.api_view import BaseApiView
 from src.db.models import Stock, get_db
-from src.db.dao import group_dao
+from src.db.dao import group_dao, stock_dao
 from src.access import qstock_access
 
 from fastapi import HTTPException, Depends
@@ -20,26 +20,54 @@ class GroupView(BaseApiView):
         if not group_name:
             raise HTTPException(status_code=404, detail="group not found")
         group = await group_dao.get_group(group_name, session)
-        stocks = {}
+        stock_info = []
+        keys = [
+            "名称",
+            "代码",
+            "最新",
+            "涨幅",
+            "金额",
+            "换手",
+            "量比",
+            "最高",
+            "最低",
+            "今开",
+            "昨收",
+            "涨停",
+            "跌停",
+            "外盘",
+            "内盘",
+        ]
         for stock in group.get_stock_info().values():
-            stocks[stock["code"]] = stock
+            # 最新 30.69
+            # 涨幅 -4.98
+            # 金额 2989753873.22
+            # 换手 13.9
+            # 量比 0.72
+            # 最高 33.3
+            # 最低 30.52
+            # 今开 32.0
+            # 昨收 32.3
+            # 涨停 38.76
+            # 跌停 25.84
+            # 外盘 443118.0
+            # 内盘 486456.0
+            realtime_data = qstock_access.realtime_data(stock["code"])
+            stock = await stock_dao.get_stock(stock["code"], session)
+            realtime_data.update({
+                "市场": stock.market,
+                "id": stock.id,
+                "名称": stock.name,
+                "代码": stock.code,
+            })
+            stock_info.append(realtime_data)
 
-        realtime_data = qstock_access.realtime_data(stocks.keys())
-        for row in realtime_data["data"]:
-            # row
-            # ['300377', '赢时胜', -1.43, 31.67, 32.2, 30.87, 31.05, 16.65, 0.64, -1282.97, 1072871, 3385650458.63, 32.13, 23786547784, 20404631965, '深A', '2025-02-14 15:34:24']
-            stocks[row[0]]["realtime_data"] = {k:v for k, v in zip(realtime_data["keys"], row)}
-        keys = realtime_data["keys"]
-
-        for idx, key in enumerate(keys):
-            if key in ["成交额", "总市值", "流通市值"]:
-                keys[idx] = key + "（亿）"
         return {
             "data": {
                 "id": group.id,
                 "name": group.name,
                 "keys": keys,
-                "stock_info": [stock for stock in stocks.values()],
+                "stock_info": stock_info
             }
         }
 
