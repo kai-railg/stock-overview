@@ -1,10 +1,10 @@
 'use client';
 
 import '@/components/features/header/header.css';
+import { Header, HeaderButton } from '@/components/features/layout';
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 import './daily.css';
-
 function DailyButton() {
     const pathname = usePathname();
     const match = pathname.match(/^\/dailies\/daily\/([^/]+)/);
@@ -38,26 +38,10 @@ export default function DailiesRootLayout({
     
     return (
         <div>
-            <div className="header">
-                <nav>
-                    <button onClick={handleIndexSubmit}>所有日报</button>
-                    <DailyButton></DailyButton>
-                    <HistoryButton></HistoryButton>
-                    <div className="search-container">
-                        <form onSubmit={handleSearchSubmit}>
-                            <input
-                                type="text"
-                                placeholder="Search.."
-                                value={searchValue}
-                                onChange={(e) => setSearchValue(e.target.value)}
-                            />
-                            <button type="submit">
-                                <i>搜索</i>
-                            </button>
-                        </form>
-                    </div>
-                </nav>
-            </div>
+            <Header>
+                <HeaderButton text="所有日报" url="/dailies"></HeaderButton>
+                <HeaderButton text="近期浏览" url="/dailies/history"></HeaderButton>
+            </Header>
             {children}
         </div>
     )

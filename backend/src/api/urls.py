@@ -34,6 +34,8 @@ route_list = [
     ( "/api/stock/trades", StockTradesView, {"summary": "获取所有股票交易记录"}, ),
     ( "/api/stock/trade", StockTradePostView, {"summary": "创建股票交易记录"}, ),
     ( "/api/stock/trade/{trade_id}", StockTradeView, {"summary": "查删改股票交易记录"}, ),
+    ( "/api/stock/monitor", StockMonitorView, {"summary": "监控股票信息"}, ),
+
     #........
     ( "/api/select/select", SelectView, {"summary": "选股"}),
     #········

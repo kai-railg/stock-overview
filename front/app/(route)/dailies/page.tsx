@@ -61,7 +61,7 @@ export default function Home() {
                 <span>+ 新建每日股评</span>
             </div>
 
-
+  
             <div className="dailies">
                 {resp?.data.map(daily => (
                     <div key={daily.id} className="daily">

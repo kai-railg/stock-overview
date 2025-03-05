@@ -94,3 +94,12 @@ class TradeRespSchema(BaseModel):
     stock_id: int
 
     model_config = ConfigDict(arbitrary_types_allowed=True, from_attributes=True)
+
+class MonitorPriceSchema(BaseModel):
+    price: float
+    note: str
+
+class MonitorRequSchema(BaseModel):
+    code: str
+    name: str = ''
+    details: List[MonitorPriceSchema]

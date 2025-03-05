@@ -38,14 +38,14 @@ class SelectView(BaseApiView):
             # 超过10天的周期
             if idx >= 10:
                 # 误差不超过3%
-                if abs(low - price) / price <= 0.03:
+                if abs(low - price) / price <= 0.05:
                     # 找到低点后，再倒推10天，判断是否还有低点
-                    start = length - idx - 10 
+                    start = length - idx - 5
                     start = start if start > 0 else 0
                     before_low = min(
                         [hd["最低"] for hd in history_datas[start : length - idx]]
                     )
-                    if abs(before_low - low) / low <= 0.03:
+                    if abs(before_low - low) / low <= 0.05:
                         return row["日期"]
             return False
 

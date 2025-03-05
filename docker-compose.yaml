@@ -9,7 +9,18 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - pgdata:/Users/kai/opt/project/kai/stock-overview/data
+      - pgdata:/data/pgdata
+
+  redis:
+    container_name: stock-overview-redis
+    image: redis:alpine  # 使用官方 Redis 镜像的 Alpine 版本（轻量级）
+    restart: always
+    ports:
+      - "6379:6379"    
+    volumes:
+      - redis_data:/data/redis_data
 
 volumes:
   pgdata:
+  redis_data:
+

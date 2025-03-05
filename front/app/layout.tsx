@@ -41,11 +41,12 @@ export default function RootLayout({
       >
         <div className="flex w-screen h-screen">
           <div className="flex-row flex-auto basis-1/12 max-w-24 bg-[rgb(35,50,63)]">
-              <SidebarButton text="logo" url='./'></SidebarButton>
-              <SidebarButton text="自选" url='./stock'></SidebarButton>
-              <SidebarButton text="日报" url='./dailies'></SidebarButton>
-              <SidebarButton text="便签" url='./notes'></SidebarButton>
-              <SidebarButton text="交易" url='./trade'></SidebarButton>
+              <SidebarButton text="logo" url='/'></SidebarButton>
+              <SidebarButton text="自选" url='/stock'></SidebarButton>
+              <SidebarButton text="日报" url='/dailies'></SidebarButton>
+              <SidebarButton text="便签" url='/notes'></SidebarButton>
+              <SidebarButton text="交易" url='/trade'></SidebarButton>
+              <SidebarButton text="监控" url='/monitor'></SidebarButton>
           </div>
           <div className="basis-11/12 flex-auto">
             {children}
